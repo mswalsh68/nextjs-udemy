@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function MealsShare() {
   return (
-    <div>Share Meals</div>
+    <h1>Share Meals</h1>
   )
 }
