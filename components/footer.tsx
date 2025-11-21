@@ -1,7 +1,10 @@
+import Link from 'next/link'
 import React from 'react'
 
-export default function footer() {
+export default function Footer() {
   return (
-    <div>footer</div>
+    <footer>
+        <div>Footer</div>
+    </footer>
   )
 }

@@ -1,9 +1,11 @@
+import Link from 'next/link'
 import React from 'react'
 
-function navbar() {
+export default function Navbar() {
   return (
-    <div>navbar</div>
+    <footer>
+        <Link href="/">
+        </Link>
+    </footer>
   )
 }
-
-export default navbar
