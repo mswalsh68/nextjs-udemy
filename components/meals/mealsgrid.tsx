@@ -1,17 +1,20 @@
 import Mealitem from './mealitem';
 import classes from './mealsgrid.module.css';
-import type { MealitemProps } from './mealitem';
+import type { Meal } from '@/data/data';
+
+type MealsGridProps = {
+  meals: (Meal & { id: number })[];
+};
 
 
-
-export default function Mealsgrid({ meals }: { meals: MealitemProps & { id: string }[] }) {
+export default function Mealsgrid({ meals }: MealsGridProps) {
   return (
     <ul className={classes.meals}>
-        {meals.map((meal) => ( 
-            <li key={meal.id}>
-                <Mealitem title={''} slug={''} image={''} summary={''} creator={''} {...meal} />
-            </li> 
-        ))}
+      {meals.map((meal) => (
+        <li key={meal.id}>
+          <Mealitem {...meal} />
+        </li>
+      ))}
     </ul>
   )
 }

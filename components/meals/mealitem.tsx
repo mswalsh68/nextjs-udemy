@@ -3,15 +3,10 @@ import Image from 'next/image';
 
 import classes from './mealitem.module.css';
 
-export type MealitemProps = {
-  title: string;
-  slug: string;
-  image: string;
-  summary: string;
-  creator: string;
-};
+import type { Meal } from '@/data/data';
 
-export default function Mealitem({ title, slug, image, summary, creator }: MealitemProps) {
+
+export default function Mealitem({ title, slug, image, summary, creator }: Meal) {
   return (
     <article className={classes.meal}>
       <header>

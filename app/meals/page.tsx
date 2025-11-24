@@ -2,8 +2,13 @@ import Link from 'next/link';
 
 import classes from './page.module.css';
 import MealsGrid from '@/components/meals/mealsgrid';
+import { getMeals } from '@/data/data';
 
-export default function MealsPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function MealsPage() {
+  const meals = await getMeals();
+
   return (
     <>
       <header className={classes.header}>
@@ -21,7 +26,7 @@ export default function MealsPage() {
         </p>
       </header>
       <main className={classes.main}>
-        <MealsGrid meals={[] as { title: string; slug: string; image: string; summary: string; creator: string; id: string }[]} />
+        <MealsGrid meals={meals} />
       </main>
     </>
   );
