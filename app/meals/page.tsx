@@ -3,11 +3,20 @@ import Link from 'next/link';
 import classes from './page.module.css';
 import MealsGrid from '@/components/meals/mealsgrid';
 import { getMeals } from '@/data/data';
+import { Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
-export default async function MealsPage() {
+async function Meals(){
   const meals = await getMeals();
+  return (
+    <MealsGrid meals={meals} />
+  )
+}
+
+
+
+export default  function MealsPage() {
 
   return (
     <>
@@ -26,7 +35,9 @@ export default async function MealsPage() {
         </p>
       </header>
       <main className={classes.main}>
-        <MealsGrid meals={meals} />
+        <Suspense fallback={<p className={classes.loading}>Meals Loading...</p>}>
+            <Meals />
+        </Suspense>
       </main>
     </>
   );
