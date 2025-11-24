@@ -1,6 +1,6 @@
 import { executeStoredProcedure } from './sqlConnection';
 
- type Cheesecake = {
+ export type Meal = {
     id: number;
 	  slug: string;
 	  title: string;
@@ -12,44 +12,14 @@ import { executeStoredProcedure } from './sqlConnection';
 };
 
 
-export async function spGetItemBycategory( CategoryID: number): Promise<Cheesecake[]> {
-      let products: Cheesecake[] = [];
+export async function getMeals(): Promise<Meal[]> {
+      let meals: Meal[] = [];
   try {
-    products = await executeStoredProcedure('dbo.spGetItemBycategory', {
-      CategoryID: CategoryID,
-    });
-    return products;
+    meals = await executeStoredProcedure('dbo.spGetMeals');
+    return meals;
     } catch (error) {
     console.error('Error fetching data:', error);
-    throw new Error('Failed to fetch cheesecake data');
+    throw new Error('Failed to fetch meal data');
   }
 }
 
-
-export async function spGetFeaturedItem(): Promise<Cheesecake[]> {
-  let products: Cheesecake[] = [];
-  try {
-    products = await executeStoredProcedure('dbo.spGetFeaturedItem', {
-      Featured: 1,
-    });
-    return products;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw new Error('Failed to fetch classic cheesecake data');
-  }
-}
-
-
-
-export async function spGetSingleItem(id: number): Promise<Cheesecake[]> {
-  let products: Cheesecake[] = [];
-  try {
-    products = await executeStoredProcedure('dbo.spGetSingleItem', {
-      FlavorID: id,
-    });
-    return products;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw new Error('Failed to fetch classic cheesecake data');
-  }
-}
