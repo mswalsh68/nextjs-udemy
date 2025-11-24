@@ -1,11 +1,14 @@
+
 import Link from 'next/link'
 import classes from './navbar.module.css'
 
 import LogoImg from '@/assets/logo.png'
 import Image from 'next/image'
 import HeaderBackground from './headerbackground'
+import Navlink from './navlink'
 
 export default function Navbar() {
+    
   return (
     <>
         <HeaderBackground />
@@ -24,10 +27,10 @@ export default function Navbar() {
             <nav className={classes.nav}>
                 <ul>
                     <li>
-                        <Link href='/meals'>Browse Meals</Link>
+                        <Navlink href="/meals">Browse Meals</Navlink>
                     </li>
                     <li>
-                        <Link href='/community'>Foodies Community</Link>
+                        <Navlink href="/community">Foodies Community</Navlink>
                     </li>
                 </ul>
             </nav>
