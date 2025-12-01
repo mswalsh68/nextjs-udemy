@@ -1,6 +1,6 @@
 import { Meal } from '@/app/types/types';
 import { executeStoredProcedure } from './sqlConnection';
-import { notFound } from 'next/navigation';
+import NotFound from '@/app/meals/not-found';
 
 
 
@@ -23,9 +23,6 @@ export async function getMealDetails(slug: string): Promise<Meal> {
     const meals: Meal[] = await executeStoredProcedure('dbo.spGetMealDetails', {
       slug: slug,
     });
-    if (meals.length === 0) {
-      notFound(); // This triggers Next.js 404 page automatically
-    }
     return meals[0];
   } catch (error) {
     console.error('Error fetching meal:', error);
