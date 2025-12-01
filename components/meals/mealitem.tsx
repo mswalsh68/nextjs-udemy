@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
 import classes from './mealitem.module.css';
+import { Meal } from '@/app/types/types';
 
-import type { Meal } from '@/data/data';
 
 
 export default function Mealitem({ title, slug, image, summary, creator }: Meal) {
