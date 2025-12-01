@@ -2,12 +2,13 @@ import Image from 'next/image';
 import classes from  './page.module.css';
 import { getMealDetails } from '../../../data/data';
 import Error from '@/app/error';
+import { Meal } from '@/app/types/types';
 
-export default async function MealsDetail({params}: {params: {slug: string}}) {
-  const {slug} = params;
+export default async function MealsDetail({ params }: { params:Meal }) {
+  const slug = params.slug;
   const meals = await getMealDetails(slug); // returns an array
 
-  if (meals.length === 0) {
+  if (meals.length === 0) { 
     return <Error />;
   }         
   // Now we know meals[0] exists
