@@ -3,16 +3,17 @@ import classes from  './page.module.css';
 import { getMealDetails } from '../../../data/data';
 import Error from '@/app/error';
 import { Meal } from '@/app/types/types';
+import { notFound } from 'next/navigation';
 
-export default async function MealsDetail({ params }: { params:Meal }) {
-  const slug = params.slug;
-  const meals = await getMealDetails(slug); // returns an array
+export default async function MealsDetail({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;          // You added the await → error gone!
+  const meal = await getMealDetails(slug);
 
-  if (meals.length === 0) { 
-    return <Error />;
-  }         
-  // Now we know meals[0] exists
-  const meal = meals[0];
+  if (!meal) notFound();
   
   return (
     <>
