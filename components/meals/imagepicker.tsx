@@ -16,6 +16,7 @@ const [pickedImage, setPickedImage] = useState<string | null>(null);  // Assumin
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file){
+      setPickedImage(null);
       return;
     }
     const reader = new FileReader();
@@ -46,6 +47,7 @@ const [pickedImage, setPickedImage] = useState<string | null>(null);  // Assumin
           accept="image/png, image/jpeg, image/jpg"
           ref={imageInput}
           onChange={handleImageChange}
+          required
         />
         <button className={classes.button} type="button" onClick={handleImagePick} >
           Choose Image
