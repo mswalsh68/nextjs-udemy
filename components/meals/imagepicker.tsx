@@ -36,7 +36,7 @@ const [pickedImage, setPickedImage] = useState<string | null>(null);  // Assumin
             <Image src={pickedImage} 
                   alt="Preview" 
                   fill
-                  />
+            />
           )}
         </div>
         <input 
