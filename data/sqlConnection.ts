@@ -1,5 +1,20 @@
 import sql from 'mssql';
 
+// Define a reasonable default row type — you can extend or replace this
+type DatabaseRow = Record<string, unknown>;
+
+type MssqlError = {
+  message: string;
+  code?: string;
+  number?: number;
+  state?: number;
+  class?: number;
+  lineNumber?: number;
+  serverName?: string;
+  procName?: string;
+  originalError?: { info?: unknown };
+};
+
 let pool: sql.ConnectionPool | null = null;
 
 const config: sql.config = {
@@ -31,26 +46,58 @@ async function getPool() {
   return pool;
 }
 
-export async function executeStoredProcedure(procedureName: string, params = {}) {
+export async function executeStoredProcedure<T = DatabaseRow>(
+  procedureName: string,
+  params: Record<string, unknown> = {}
+): Promise<T[]> {
   const pool = await getPool();
   const request = pool.request();
 
-  for (const [key, value] of Object.entries(params)) {
-    request.input(key, value);
-  }
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      // Safe cast: mssql accepts primitives, null, Date, and sql types
+      request.input(key, value as sql.ISqlType | null);
+    }
+  });
 
-  const result = await request.execute(procedureName);
-  return result.recordset;
+  try {
+    const result = await request.execute(procedureName);
+    return (result.recordset as T[]) || [];
+  } catch (error: unknown) {
+    const err = error as MssqlError;
+
+    console.error('=== SQL STORED PROCEDURE ERROR ===');
+    console.error('Procedure:', procedureName);
+    console.error('Parameters:', params);
+    console.error('Message:', err.message);
+    console.error('Code:', err.code);
+    console.error('Number:', err.number);
+    console.error('State:', err.state);
+    console.error('Class:', err.class);
+    console.error('Line:', err.lineNumber);
+    console.error('Server:', err.serverName);
+    console.error('ProcName:', err.procName);
+    console.error('Original Info:', err.originalError?.info);
+    console.error('=====================================');
+
+    throw error;
+  }
 }
 
-export async function queryDatabase(query: string, params = {}) {
+
+export async function queryDatabase<T = DatabaseRow>(
+  query: string,
+  params: Record<string, unknown> = {}
+): Promise<T[]> {
   const pool = await getPool();
   const request = pool.request();
 
-  for (const [key, value] of Object.entries(params)) {
-    request.input(key, value);
-  }
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      request.input(key, value as sql.ISqlType | null);
+    }
+  });
 
   const result = await request.query(query);
-  return result.recordset;
+  return (result.recordset as T[]) || [];
 }
