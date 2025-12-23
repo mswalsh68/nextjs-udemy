@@ -1,6 +1,6 @@
 // For data fetched from database or used for display
 export type Meal = {
-  id?: number;
+  id: number;
   slug: string;
   title: string;
   image: string;              // Always a string URL when from DB
@@ -20,7 +20,8 @@ export type MealFormData = {
   creator_email: string;
 };
 
+// Props for MealsGrid
 export type MealsGridProps = {
-  meals: (Meal & { id: number })[];
+  meals: Meal[];
 };
 

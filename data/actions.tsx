@@ -93,7 +93,7 @@ export async function shareMeal(formData: FormData) {
   }
 
   /// Build the final Meal object for database insertion
-  const meal: Meal = {
+  const meal = {
     title: mealData.title.trim(),
     summary: mealData.summary.trim(),
     instructions: cleanInstructions,

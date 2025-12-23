@@ -1,4 +1,4 @@
-import { Meal } from '@/app/types/types';
+import { Meal, MealFormData } from '@/app/types/types';
 import { executeStoredProcedure } from './sqlConnection';
 
 export async function getMeals(): Promise<Meal[]> {
@@ -27,7 +27,7 @@ export async function getMealDetails(slug: string): Promise<Meal> {
   }
 }
 
-export async function saveMeal(meal: Meal): Promise<void> {
+export async function saveMeal(meal: MealFormData): Promise<void> {
   console.log('Attempting to save meal:', {
     title: meal.title,
     slug: meal.slug,
