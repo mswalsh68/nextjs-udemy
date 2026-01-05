@@ -105,7 +105,7 @@ export async function shareMeal(formData: FormData) {
   };
 
   // Save to database using your separated function
-  await saveMeal(meal);
+  await saveMeal(mealData);
 
   // Redirect to meals list on success
   redirect('/meals');
