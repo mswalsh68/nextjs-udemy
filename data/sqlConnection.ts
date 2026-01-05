@@ -18,7 +18,8 @@ type MssqlError = {
 let pool: sql.ConnectionPool | null = null;
 
 const config: sql.config = {
-  server: process.env.DB_SERVER || 'localhost',
+  server: process.env.DB_SERVER as string,  // Will throw if missing
+  //server: process.env.DB_SERVER || 'localhost',
   port: parseInt(process.env.DB_PORT || '1433', 10),
   database: process.env.DB_DATABASE!,
   user: process.env.DB_USER!,
