@@ -12,6 +12,7 @@ export type Meal = {
 
 // For data coming from the share meal form (during creation/upload)
 export type MealFormData = {
+  slug: string;
   title: string;
   summary: string;
   instructions: string;
