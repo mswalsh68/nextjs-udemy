@@ -1,5 +1,7 @@
 import sql from 'mssql';
 
+console.log('DB_SERVER from env:', process.env.DB_SERVER);
+
 // Define a reasonable default row type — you can extend or replace this
 type DatabaseRow = Record<string, unknown>;
 
